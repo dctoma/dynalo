@@ -95,4 +95,18 @@ FunctionSignature* get_function(native::handle lib_handle, const std::string& fu
     return reinterpret_cast<FunctionSignature*>(func_ptr);
 }
 
+
+template <typename FunctionPtr>
+inline
+FunctionPtr get_function_ptr(native::handle lib_handle, const std::string& func_name)
+{
+    FARPROC func_ptr = ::GetProcAddress(lib_handle, func_name.c_str());
+    if (func_ptr == nullptr)
+    {
+        throw std::runtime_error(std::string("Failed to get [func_name:") + func_name + "]: " + last_error());
+    }
+
+    return reinterpret_cast<FunctionPtr>(func_ptr);
+}
+
 }}

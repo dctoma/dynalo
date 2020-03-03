@@ -118,6 +118,29 @@ FunctionSignature* get_function(native::handle lib_handle, const std::string& fu
 }
 
 
+/// Looks up a function in the shared library and returns pointer to it
+///
+/// @tparam FunctionPtr The function pointer type to be looked up.
+///                           i.e. `type_name` for `typedef return_type(*type_name)(param_types...)`
+///                           e.g. `foo` for `void(*foo)(const char*)`, `bar` for `bool (*bar)(int, int)`
+///
+/// @param lib_handle The handle of the library that contains the function
+/// @param func_name  The name of the function to find
+///
+/// @return A function pointer of type `FunctionPtr` to the @p func_name function
+///
+/// @throw std::runtime_error If it fails to find the @p func_name function
+template <typename FunctionPtr>
+inline
+FunctionPtr get_function_ptr(native::handle lib_handle, const std::string& func_name)
+{
+    return detail::get_function_ptr<FunctionPtr>(lib_handle, func_name);
+}
+
+
+
+
+
 /// A shared library
 ///
 /// This class wraps the open/close/get_function functions of the dynalo namespace:
@@ -169,6 +192,16 @@ public:
     {
         return dynalo::get_function<FunctionSignature>(m_handle, func_name);
     }
+
+    /// Returns a function pointer to the @p func_name using dynalo::get_function_ptr
+    template <typename FunctionPtr>
+    FunctionPtr get_function_ptr(const std::string& func_name)
+    {
+        return dynalo::get_function_ptr<FunctionPtr>(m_handle, func_name);
+    }
+
+   
+
 
     /// Returns the native handle of the loaded shared library
     native::handle get_native_handle()
