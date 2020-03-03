@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.13)
 
-project(dynalo-test)
+#project(dynalo-test)
 
 set(CMAKE_CXX_STANDARD          11 )
 set(CMAKE_CXX_STANDARD_REQUIRED ON )
@@ -17,6 +17,9 @@ target_sources(shared PUBLIC shared.hpp)
 
 add_dependencies(loader shared)
 
+
+if (DYNALO_BUILD_TESTS)
+
 enable_testing()
 
 add_test(NAME function_test 
@@ -26,3 +29,5 @@ add_test(NAME function_test
 add_test(NAME function_pointer_test 
     COMMAND loader "$<TARGET_FILE_DIR:shared>" "function_ptr"
 )
+
+endif()

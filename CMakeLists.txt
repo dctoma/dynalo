@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.13)
 
 project(dynalo)
 
@@ -6,7 +6,8 @@ project(dynalo)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON )
 #set(CMAKE_CXX_EXTENSIONS        OFF)
 
-option(DYNALO_TESTING "Enable library testing" OFF)
+option(DYNALO_BUILD_EXAMPLES "Enable library examples" ON)
+option(DYNALO_BUILD_TESTS "Enable library tests" ON)
 
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -60,6 +61,6 @@ install(
     "${CONFIG_PACKAGE_BUILD_LOCATION}/${PROJECT_NAME}ConfigVersion.cmake"
     DESTINATION "${CONFIG_PACKAGE_INSTALL_LOCATION}"
 )
-if (DYNALO_TESTING)
+if (DYNALO_BUILD_EXAMPLES)
     add_subdirectory(test)
 endif()
