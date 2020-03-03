@@ -6,6 +6,9 @@ project(dynalo)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON )
 #set(CMAKE_CXX_EXTENSIONS        OFF)
 
+option(DYNALO_TESTING "Enable library testing" OFF)
+
+
 add_library(${PROJECT_NAME} INTERFACE)
 target_include_directories(${PROJECT_NAME} INTERFACE
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
@@ -57,5 +60,6 @@ install(
     "${CONFIG_PACKAGE_BUILD_LOCATION}/${PROJECT_NAME}ConfigVersion.cmake"
     DESTINATION "${CONFIG_PACKAGE_INSTALL_LOCATION}"
 )
-
-add_subdirectory(test)
+if (DYNALO_TESTING)
+    add_subdirectory(test)
+endif()

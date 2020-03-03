@@ -6,3 +6,5 @@ cmake-build-*/
 .vscode/
 install/
 HunterGate.cmake
+CMakeSettings.json
+out/
